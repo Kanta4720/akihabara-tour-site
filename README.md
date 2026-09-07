@@ -1,6 +1,6 @@
 # Juniho — Japan Checklist
 
-A small, shareable checklist for experiencing Japan. This first version is a static site with three categories: supermarket, convenience store, and eating.
+A small, shareable checklist for experiencing Japan. This first version is a static site with three categories: supermarket, convenience store, and food. Checks are stored only in the visitor's own browser; the share button shares the checklist itself.
 
 ## Run locally
 
