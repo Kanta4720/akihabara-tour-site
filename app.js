@@ -1,24 +1,68 @@
 const categories = [
-  {id:'supermarket', label:'Supermarket', jp:'スーパー', items:[
-    ['Try a regional snack','Look for something you have never seen before.'],['Buy a fruit sandwich','A fluffy, sweet Japanese convenience.'],['Pick a ready-made meal','The deli corner is a small window into everyday Japan.'],['Read the labels','Notice the ingredients, dates, and tiny illustrations.'],['Try Japanese milk','The taste and packaging may surprise you.'],['Find seasonal fruit','Ask a staff member what is best right now.'],['Buy a local drink','Look for a regional soda, tea, or juice.'],['Eat something at home','Make the supermarket your own little food tour.'],['Choose a 100-yen item','A tiny souvenir can be a perfect souvenir.'],['Ask: What do you recommend?','おすすめは何ですか？ (Osusume wa nan desu ka?)']
+  { id: 'supermarket', label: 'Supermarket', items: [
+    ['Fruit sandwich', 'フルーツサンド — soft bread, whipped cream, and fresh fruit.'],
+    ['Japanese milk', '牛乳 — try a local brand, especially in Hokkaido or Kyushu.'],
+    ['Prepared sushi', 'お寿司 — a simple way to compare everyday sushi with restaurant sushi.'],
+    ['Fried chicken', '唐揚げ — look in the deli section, often sold by weight.'],
+    ['Seasonal fruit', 'いちご・桃・ぶどう — Japan takes fruit seriously.'],
+    ['Japanese pudding', 'プリン — a small, very Japanese dessert.'],
+    ['Regional snack', 'ご当地お菓子 — choose something you have never seen before.'],
+    ['Onigiri', 'おにぎり — salmon, tuna mayo, or a mystery filling.'],
+    ['Bottled tea', 'お茶 — try green tea, barley tea, or jasmine tea without sugar.'],
+    ['Ask for a recommendation', 'おすすめは何ですか？ — Osusume wa nan desu ka?']
   ]},
-  {id:'convenience', label:'Convenience store', jp:'コンビニ', items:[
-    ['Try an onigiri','Start with a flavor you recognize, then choose a mystery one.'],['Get a hot snack','Karaage, nikuman, or croquettes from the counter.'],['Look at the seasonal sweets','Convenience stores change their desserts often.'],['Make a coffee stop','Notice how easy an ordinary morning can be.'],['Try a Japanese sandwich','Egg salad sandwiches are a classic.'],['Use the copy machine','It can print, scan, and do much more.'],['Send a parcel','A small taste of how convenient Japan can be.'],['Find a local limited item','Some snacks are only sold in certain regions.'],['Try a bottled tea','Green tea, barley tea, or jasmine tea—no sugar needed.'],['Take a late-night walk','A lit-up convenience store is part of the scenery.']
+  { id: 'convenience', label: 'Convenience store', items: [
+    ['Egg sandwich', 'たまごサンド — one of the easiest Japanese classics to start with.'],
+    ['Hot snack', 'ホットスナック — karaage, croquettes, or steamed pork buns.'],
+    ['Seasonal dessert', '新作スイーツ — convenience stores refresh these constantly.'],
+    ['Iced coffee', 'アイスコーヒー — make it at the machine after paying.'],
+    ['Instant miso soup', '味噌汁 — a comforting, easy breakfast addition.'],
+    ['Cup noodles', 'カップ麺 — Japan has far more varieties than you expect.'],
+    ['Japanese ice cream', 'アイス — try a flavor you would not find at home.'],
+    ['Local limited item', '限定商品 — look for the word 限定 (gentei).'],
+    ['Late-night stop', '夜のコンビニ — a small but very Japanese travel memory.'],
+    ['Pay with a tray', 'お会計 — put cash on the tray if there is one.']
   ]},
-  {id:'food', label:'Eat & notice', jp:'食べる', items:[
-    ['Order something you cannot pronounce','Pointing and trying is part of the fun.'],['Eat at a tiny local restaurant','Choose the busy place with a short menu.'],['Try a vending-machine meal ticket','Buy your ticket before sitting down.'],['Have breakfast like a local','A simple set meal can be memorable.'],['Visit a bakery','Pick one thing just because it looks good.'],['Try a regional dish','Every town has something worth tasting.'],['Sit at a counter','Watch the food being made in front of you.'],['Thank the staff','ごちそうさまでした (Gochisousama deshita).'],['Save your favorite','Keep a photo or note for your next trip.'],['Share your recommendation','The best discoveries come from people.']
+  { id: 'food', label: 'Food', items: [
+    ['Ramen at the counter', 'ラーメン — choose a small local place with a short menu.'],
+    ['Set-meal breakfast', '定食 — rice, soup, a main dish, and small sides.'],
+    ['Bakery bread', 'パン屋さん — pick one item just because it looks good.'],
+    ['Soba or udon', 'そば・うどん — quick, warm, and usually very affordable.'],
+    ['Sushi conveyor belt', '回転寿司 — an easy and fun first sushi experience.'],
+    ['A regional dish', 'ご当地グルメ — ask what the city is known for.'],
+    ['Street-food snack', '食べ歩き — enjoy it only where the area allows it.'],
+    ['A tiny restaurant', '小さなお店 — sit at the counter if there is space.'],
+    ['Say thank you after eating', 'ごちそうさまでした — Gochisousama deshita.'],
+    ['Save a favorite', '写真を撮る — keep one memory for your next Japan trip.']
   ]}
 ];
-const STORAGE_KEY='juniho-checked-v1';
-let checked = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'));
+const STORAGE_KEY = 'juniho-saved-v2';
+let saved = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
 let active = categories[0].id;
-const tabs=document.querySelector('#tabs'), items=document.querySelector('#items');
-function renderTabs(){tabs.innerHTML=categories.map(c=>{const done=c.items.filter((_,i)=>checked.has(`${c.id}-${i}`)).length;return `<button class="tab ${c.id===active?'active':''}" data-category="${c.id}" type="button">${c.label}<small>${done}/${c.items.length}</small></button>`}).join('');tabs.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{active=b.dataset.category;renderTabs();renderItems()}) )}
-function renderItems(){const c=categories.find(x=>x.id===active);items.innerHTML=c.items.map(([title,desc],i)=>{const key=`${c.id}-${i}`,is=checked.has(key);return `<article class="item ${is?'checked':''}"><div class="item-top"><span class="item-number">${String(i+1).padStart(2,'0')}</span><input class="check" aria-label="Mark ${title} as done" type="checkbox" data-key="${key}" ${is?'checked':''}></div><div><h2>${title}</h2><p>${desc}</p></div><div class="item-tag">${c.jp}</div></article>`}).join('');items.querySelectorAll('.check').forEach(box=>box.addEventListener('change',()=>{box.checked?checked.add(box.dataset.key):checked.delete(box.dataset.key);save();renderTabs();renderItems();updateProgress()}))}
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify([...checked]))}
-function updateProgress(){const total=categories.reduce((n,c)=>n+c.items.length,0),n=checked.size,p=Math.round(n/total*100);document.querySelector('#progressCount').textContent=n;document.querySelector('#totalCount').textContent=total;document.querySelector('#progressPercent').textContent=`${p}%`;document.querySelector('#progressBar').style.width=`${p}%`}
-function toast(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
-document.querySelector('#resetButton').addEventListener('click',()=>{checked.clear();save();renderTabs();renderItems();updateProgress();toast('Your checklist is ready for a fresh start.')});
-document.querySelector('#shareButton').addEventListener('click',async()=>{const encoded=btoa([...checked].join(',')).replaceAll('=','');const url=`${location.origin}${location.pathname}?checked=${encoded}`;try{if(navigator.share)await navigator.share({title:'My Japan checklist',text:'Things I want to try in Japan',url});else{await navigator.clipboard.writeText(url);toast('Share link copied.')}}catch(e){if(e.name!=='AbortError')toast('Could not share right now.')}});
-const params=new URLSearchParams(location.search);if(params.get('checked')){try{const decoded=atob(params.get('checked'));if(decoded)checked=new Set(decoded.split(',').filter(Boolean));save()}catch(e){}}
-renderTabs();renderItems();updateProgress();
+const tabs = document.querySelector('#tabs');
+const items = document.querySelector('#items');
+const categoryLabel = document.querySelector('#categoryLabel');
+function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...saved])); }
+function currentCategory() { return categories.find(category => category.id === active); }
+function renderTabs() {
+  tabs.innerHTML = categories.map(category => `<button class="tab ${category.id === active ? 'active' : ''}" data-category="${category.id}" type="button">${category.label}</button>`).join('');
+  tabs.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => { active = tab.dataset.category; renderTabs(); renderItems(); }));
+}
+function renderItems() {
+  const category = currentCategory();
+  categoryLabel.textContent = category.label;
+  items.innerHTML = category.items.map(([title, description], index) => {
+    const key = `${category.id}-${index}`;
+    const isSaved = saved.has(key);
+    return `<button class="item ${isSaved ? 'checked' : ''}" data-key="${key}" type="button" aria-pressed="${isSaved}"><span class="check" aria-hidden="true">${isSaved ? '✓' : ''}</span><span class="item-copy"><h2>${title}</h2><p>${description}</p></span></button>`;
+  }).join('');
+  items.querySelectorAll('.item').forEach(item => item.addEventListener('click', () => { const key = item.dataset.key; saved.has(key) ? saved.delete(key) : saved.add(key); persist(); renderItems(); }));
+}
+function toast(message) { const element = document.querySelector('#toast'); element.textContent = message; element.classList.add('show'); setTimeout(() => element.classList.remove('show'), 2200); }
+document.querySelector('#resetButton').addEventListener('click', () => { saved.clear(); persist(); renderItems(); toast('Your checks have been cleared.'); });
+document.querySelector('#shareButton').addEventListener('click', async () => {
+  const share = { title: 'Juniho — Things to try in Japan', text: 'A small checklist for experiencing Japan.', url: location.href.split('?')[0] };
+  try { if (navigator.share) await navigator.share(share); else { await navigator.clipboard.writeText(share.url); toast('Checklist link copied.'); } } catch (error) { if (error.name !== 'AbortError') toast('Could not share right now.'); }
+});
+renderTabs();
+renderItems();
