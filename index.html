@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f5f1e8" />
-  <title>Juniho — Japan, one small experience at a time</title>
+  <meta name="theme-color" content="#fffdf8" />
+  <title>Juniho — Small things to try in Japan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,25 +14,19 @@
   <main class="shell">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Juniho home"><span class="brand-mark">じ</span><span>JUNIHO</span></a>
-      <button id="shareButton" class="share-button" type="button">Share my list <span aria-hidden="true">↗</span></button>
+      <button id="shareButton" class="share-button" type="button">Share <span aria-hidden="true">↗</span></button>
     </header>
-
     <section class="intro" id="top">
       <p class="eyebrow">A little memo from Japan</p>
-      <h1>Make your own<br><em>Japan checklist.</em></h1>
-      <p class="intro-copy">Small things to try, taste, notice, and remember. Check what catches your eye.</p>
-      <div class="progress-wrap" aria-label="Your progress">
-        <div class="progress-meta"><span><strong id="progressCount">0</strong> of <span id="totalCount">30</span> checked</span><span id="progressPercent">0%</span></div>
-        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
-      </div>
+      <h1>Things to try<br>in <em>Japan.</em></h1>
+      <p>Tap anything that sounds good. Your checks stay on this device.</p>
     </section>
-
     <nav id="tabs" class="tabs" aria-label="Checklist categories"></nav>
+    <section class="list-heading"><p id="categoryLabel">Supermarket</p><span>Tap to save</span></section>
     <section id="items" class="items" aria-live="polite"></section>
-
     <footer class="footer">
-      <p>Juniho is a simple note for experiencing Japan in your own way.</p>
-      <button id="resetButton" class="reset-button" type="button">Reset checked items</button>
+      <button id="resetButton" class="reset-button" type="button">Clear my checks</button>
+      <p>A small note for making Japan your own.</p>
     </footer>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
